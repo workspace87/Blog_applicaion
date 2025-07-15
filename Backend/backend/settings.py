@@ -1,8 +1,10 @@
 # settings.py (corrected)
 
+import os
 from pathlib import Path
 from datetime import timedelta
 from environs import Env
+import dj_database_url
 
 env = Env()
 env.read_env()
@@ -10,7 +12,7 @@ env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env("SECRET_KEY", "your-default-dev-key")
-DEBUG = env.bool("DEBUG", True)
+DEBUG = env.bool("DEBUG", False)
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", [])
 
 INSTALLED_APPS = [
@@ -69,10 +71,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3', # This is for local development fallback
+        conn_max_age=600 # Keep connections alive longer
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -101,10 +103,10 @@ AUTH_USER_MODEL = 'api.User'
 STATIC_URL = 'static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 # Environment values with fallbacks
 SITE_URL = env("SITE_URL", "http://localhost:8000")
