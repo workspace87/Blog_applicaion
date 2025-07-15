@@ -3,6 +3,6 @@ services:
     name: blog-backend-service
     env: python
     rootDir: .
-    startCommand: gunicorn Backend.wsgi:application
+    startCommand: gunicorn backend.wsgi:application
     buildCommand: pip install -r requirements.txt
     
