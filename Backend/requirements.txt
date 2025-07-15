@@ -22,3 +22,5 @@ gunicorn==22.0.0             # Or latest stable version
 whitenoise==6.6.0            # Or latest stable version
 dj-database-url==2.1.0       # Or latest stable version
 psycopg2-binary==2.9.10
+
+# Additional packages for development
