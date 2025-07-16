@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env("SECRET_KEY", "your-default-dev-key")
 DEBUG = env.bool("DEBUG", False)
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", [])
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     # Core apps
