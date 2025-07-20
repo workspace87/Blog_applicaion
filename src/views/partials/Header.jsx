@@ -1,38 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
 
 function Header() {
   const [isLoggedIn, user] = useAuthStore((state) => [state.isLoggedIn, state.user]);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="bg-gray-900 h-50 text-white">
-      <nav className="flex flex-col md:flex-row justify-between items-center px-6 py-4 shadow-md">
+    <header className="bg-gray-900 text-white shadow-md">
+      <nav className="px-6 py-4 flex flex-col md:flex-row justify-between items-center">
         {/* Brand */}
-        <Link to="/" className="text-3xl font-roboto font-bold text-white hover:text-blue-400 transition duration-300">
-          Blog<span className="text-green-500 text-3xl">.spot</span>
-        </Link>
+        <div className="flex justify-between items-center w-full md:w-auto">
+          <Link
+            to="/"
+            className="text-3xl font-roboto font-bold text-white hover:text-blue-400 transition duration-300"
+          >
+            Blog<span className="text-green-500">.spot</span>
+          </Link>
 
-        {/* Search Bar */}
-        {/* <div className="mt-4 md:mt-0">
-          <form className="flex items-center bg-gray-800 rounded">
-            <input
-              className="bg-gray-700 text-white px-4 py-2 rounded-l outline-none placeholder-gray-300"
-              type="search"
-              placeholder="Search Articles"
-              aria-label="Search"
-            />
-            <Link
-              to="/search/"
-              className="px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded-r text-white"
-            >
-              <i className="bi bi-search"></i>
-            </Link>
-          </form>
-        </div> */}
+          {/* Hamburger Toggler (Visible on mobile) */}
+          <button
+            className="md:hidden text-white text-2xl"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle Menu"
+          >
+            ☰
+          </button>
+        </div>
 
         {/* Navigation Links */}
-        <ul className="flex space-x-6 mt-4 md:mt-0">
+        <ul
+          className={`flex-col md:flex md:flex-row md:space-x-6 mt-4 md:mt-0 w-full md:w-auto ${
+            menuOpen ? "flex" : "hidden"
+          }`}
+        >
           <li>
             <Link to="/" className="hover:text-blue-400 font-semibold">
               Home
@@ -79,20 +80,32 @@ function Header() {
           {/* Auth Buttons */}
           <li>
             {isLoggedIn() ? (
-              <div className="flex space-x-2">
-                <Link to="/dashboard/" className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded">
+              <div className="flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0">
+                <Link
+                  to="/dashboard/"
+                  className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded"
+                >
                   Dashboard
                 </Link>
-                <Link to="/logout/" className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded">
+                <Link
+                  to="/logout/"
+                  className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded"
+                >
                   Logout
                 </Link>
               </div>
             ) : (
-              <div className="flex space-x-2">
-                <Link to="/register/" className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">
+              <div className="flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0">
+                <Link
+                  to="/register/"
+                  className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded"
+                >
                   Register
                 </Link>
-                <Link to="/login/" className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">
+                <Link
+                  to="/login/"
+                  className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"
+                >
                   Login
                 </Link>
               </div>
